@@ -77,7 +77,10 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: coolapk_${{ matrix.goos }}_${{ matrix.goarch }}
-          path: dist/*
+          # 只上传压缩包：多个 job 都会产出同名裸二进制，合并下载时会互相覆盖。
+          path: |
+            dist/*.tar.gz
+            dist/*.zip
           if-no-files-found: error
 
   release:
